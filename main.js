@@ -119,7 +119,10 @@ var totalTransactions = transactions.length;
 
 console.log( 'The total number of transactions is:', totalTransactions );
 
-
+// .filter() ==> filters out all objects that dont return true, and creates a new array with the true objects
+// .map()==> new array which includes the callback called on all objects
+// .reduce() ==> pass in a function that takes in 2 parameters: a total and a current ammount.
+// .sort() ==> return array in alphabetical order
 // --------------------------------------------------
 // QUESTION 01
 // --------------------------------------------------
@@ -129,7 +132,15 @@ console.log( 'The total number of transactions is:', totalTransactions );
   HINT(S):
   - Not all transactions are 'sales'.
 */
-var numSales;
+
+
+var sales = transactions.filter(function(transaction){
+    return transaction.type === 'sale';
+});
+
+var numSales = sales.length;
+
+
 
 /*
   Hey, welcome to the first question!
@@ -159,8 +170,14 @@ console.log( 'The total number of sales is:', numSales );
 /*
   Calculate the total number of 'purchases'.
 */
-var numPurchases;
 
+
+var purchases = transactions.filter(function(transaction){
+  return transaction.type === "purchase";
+});
+
+
+var numPurchases = purchases.length;
 console.log( 'The total number of purchases is:', numPurchases );
 
 
@@ -173,7 +190,19 @@ console.log( 'The total number of purchases is:', numPurchases );
   HINT(S):
   - Don't forget that 'purchases' can also be made in 'cash'!
 */
-var numCashSales;
+var sales = transactions.filter(function(transaction){
+    return transaction.type === 'sale';
+});
+
+var cashSales = sales.filter(function(sale){
+  return sale.paymentMethod === 'cash';
+});
+
+
+var numCashSales = cashSales.length;
+
+
+
 
 console.log( 'The total number of cash sales is:', numCashSales );
 
@@ -187,7 +216,15 @@ console.log( 'The total number of cash sales is:', numCashSales );
   HINT(S):
   - Make sure to exclude any 'sales' made by 'credit'!
 */
-var numCreditPurchases;
+var purchases = transactions.filter(function(transaction){
+  return transaction.type === "purchase";
+});
+
+var creditPurchases = purchases.filter(function(purchase){
+    return purchase.paymentMethod === "credit";
+});
+
+var numCreditPurchases = creditPurchases.length;
 
 console.log( 'The total number of credit purchases is:', numCreditPurchases );
 
@@ -204,7 +241,16 @@ console.log( 'The total number of credit purchases is:', numCreditPurchases );
   - The assembled array should be made up of strings, not full `transaction` objects.
   - This array is allowed to contain duplicate values.
 */
-var uniqueVendors;
+
+
+var vendors = transactions.filter(function(transaction){
+    return transaction.vendor;
+});
+
+
+var uniqueVendors = vendors.map(function(vendor){
+    return vendor.vendor;
+});
 
 console.log( 'The unique vendors are:', uniqueVendors );
 
@@ -221,9 +267,17 @@ console.log( 'The unique vendors are:', uniqueVendors );
   - The assembled array should be made up of strings, not full `transaction` objects.
   - Make sure that the resulting array *does not* include any duplicates.
 */
-var uniqueCustomers;
+var customers = transactions.filter(function(transaction){
+    return transaction.customer;
+});
 
-console.log( 'The unique customers are:', uniqueCustomers );
+
+var uniqueCustomers = customers.map(function(customer){
+    return customer.customer;
+});
+
+console.log( 'The unique customers are:', uniqueCustomers);
+
 
 
 // --------------------------------------------------
@@ -239,7 +293,21 @@ console.log( 'The unique customers are:', uniqueCustomers );
   - There may be more than 1 'sale' that includes 5 or more items.
   - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
 */
-var bigSpenders;
+var sales = transactions.filter(function(transaction){
+    return transaction.type === 'sale';
+});
+
+var bigSales = sales.filter(function(sale){
+    return sale.items.length >= 5;
+
+});
+
+var bigSpenders = bigSales.map(function(transaction){
+  return transaction.customer;
+
+});
+
+
 
 console.log( 'The "big spenders" are:', bigSpenders );
 
@@ -290,6 +358,23 @@ console.log( 'The sum of all purhcases is:', sumPurchases );
 var netProfit;
 
 console.log( 'The net profit is:', netProfit );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // --------------------------------------------------
