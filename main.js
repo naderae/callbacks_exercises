@@ -303,7 +303,7 @@ var bigSales = sales.filter(function(sale){
 });
 
 var bigSpenders = bigSales.map(function(transaction){
-  return transaction.customer;
+  return {'name': transaction.customer, 'Number Of Items': transaction.items.length}
 
 });
 
@@ -316,14 +316,33 @@ console.log( 'The "big spenders" are:', bigSpenders );
 // QUESTION 08
 // --------------------------------------------------
 /*
+
+
   Calculate the sum of the *first* 'sale' transaction.
 
   HINT(S):
   - Transactions don't have 'prices', but their 'items' do!
 */
-var sumSales;
 
-console.log( 'The sum of all sales is:', sumSales );
+var sales = transactions.filter(function(transaction){
+    return transaction.type === 'sale';
+});
+
+var saleItems = sales.map(function(sale){
+  return sale.items;
+});
+
+var sumSales = saleItems.reduce(function(sumofsums, items){
+    var transactionSum = items.reduce(function(sum, item){
+      return sum + item.price
+    },0);
+    return sumofsums + transactionSum;
+},0);
+
+console.log('The sum of all sales is:', sumSales);
+// var sumSales;
+//
+// console.log( 'The sum of all sales is:', sumSales );
 
 
 // --------------------------------------------------
@@ -337,7 +356,22 @@ console.log( 'The sum of all sales is:', sumSales );
   - Make sure to include 'price' information from *all* purchases.
 */
 
-var sumPurchases;
+var purchases = transactions.filter(function(transaction){
+  return transaction.type === "purchase";
+});
+
+var purchaseItems = purchases.map(function(purchase){
+  return purchase.items;
+});
+
+var sumPurchases = purchaseItems.reduce(function(sumofsums, items){
+  var sumIndivPurchases = items.reduce(function(sum, item){
+    return sum + item.price
+  },0);
+   return sumofsums + sumIndivPurchases;
+},0);
+
+
 
 console.log( 'The sum of all purhcases is:', sumPurchases );
 
